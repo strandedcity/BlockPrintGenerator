@@ -18,6 +18,8 @@
     <script src="js/postprocessing/MaskPass.js"></script>
     <script src="js/postprocessing/ShaderPass.js"></script>
 
+    <script src="js/three2stl/THREE2STL.js"></script>
+
     <script type="text/javascript">
 
 
@@ -182,11 +184,11 @@ function makeDataUrl(){
 //                    var planeMesh = new THREE.Mesh( plane, material );
                 console.log('done making planar heightfield mesh');
 
-                var obj = saveToOBJ(plane);
+//                var obj = saveToOBJ(plane);
 
                 console.log('ready for download!');
-console.log(obj);
-                downloadURI("data:," + obj, "heightfield.obj");
+
+                var myStlString = stlFromGeometry( plane, {download:true, useObjectPosition:false} )
 
             }
 
