@@ -140,20 +140,27 @@ function makeDataUrl(){
             img.src = dataUrl;
             img.onload = function(){
 
+                console.log('drawing dataurl to a new canvas');
                 var canvas = document.createElement( 'canvas' );
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+//                var width = window.innerWidth;
+//                var height = window.innerHeight;
+                var width = 10;
+                var height = 10;
+                canvas.width = width;
+                canvas.height = height;
                 var context = canvas.getContext( '2d' );
 
-                var size = window.innerWidth * window.innerHeight, data = new Float32Array( size );
+                var size = width * height, data = new Float32Array( size );
 
                 context.drawImage(img,0,0);
+
+                console.log('extracting pixel heights');
 
                 for ( var i = 0; i < size; i ++ ) {
                     data[i] = 0
                 }
 
-                var imgd = context.getImageData(0, 0, window.innerWidth, window.innerHeight);
+                var imgd = context.getImageData(0, 0, width, height);
                 var pix = imgd.data;
 
                 var j=0;
@@ -161,10 +168,60 @@ function makeDataUrl(){
                     var all = pix[i]+pix[i+1]+pix[i+2];
                     data[j++] = all/30;
                 }
-                
+
+                console.log('processed image data. creating THREE.geometry');
+
+                // plane
+					var plane = new THREE.PlaneGeometry( 100, 100, width, height );
+
+					for ( var k = 0; k < plane.vertices.length; k++ ) {
+						plane.vertices[k].setZ(data[k] || 0);
+					}
+
+//					var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+//                    var planeMesh = new THREE.Mesh( plane, material );
+                console.log('done making planar heightfield mesh');
+
+                var obj = saveToOBJ(plane);
+
+                console.log('ready for download!');
+console.log(obj);
+                downloadURI("data:," + obj, "heightfield.obj");
+
             }
 
         }
+function saveToOBJ(geometry) {
+    var s = '';
+    for (var i = 0; i < geometry.vertices.length; i++) {
+        s+= 'v '+(geometry.vertices[i].x) + ' ' +
+        geometry.vertices[i].y + ' '+
+        geometry.vertices[i].z + '\n';
+    }
+
+    for (i = 0; i < geometry.faces.length; i++) {
+
+        s+= 'f '+ (geometry.faces[i].a+1) + ' ' +
+        (geometry.faces[i].b+1) + ' '+
+        (geometry.faces[i].c+1);
+
+        if (geometry.faces[i].d !== undefined) {
+            s+= ' '+ (geometry.faces[i].d+1);
+        }
+        s+= '\n';
+    }
+
+    return s;
+}
+
+function downloadURI(uri, name) {
+  var link = document.createElement("a");
+  link.download = name;
+  link.href = uri;
+  link.target = "_blank";
+  link.click();
+}
+
 
 document.onclick = makeDataUrl;
 
