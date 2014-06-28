@@ -77,8 +77,15 @@ function stlFromGeometry( geometry, options ) {
 	}
 
 	stl += 'endsolid'
-
+console.log('done making stl');
 	if ( download ) {
+//          var link = document.createElement("a");
+////          link.download = name;
+//          link.href = 'data:Application/octet-stream, ' + encodeURIComponent( stl );
+//          link.target = "_blank";
+//          link.click();
+
+
 		document.location = 'data:Application/octet-stream, ' + encodeURIComponent( stl )
 	}
 

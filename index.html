@@ -146,8 +146,8 @@ function makeDataUrl(){
                 var canvas = document.createElement( 'canvas' );
 //                var width = window.innerWidth;
 //                var height = window.innerHeight;
-                var width = 10;
-                var height = 10;
+                var width = 100;
+                var height = 50;
                 canvas.width = width;
                 canvas.height = height;
                 var context = canvas.getContext( '2d' );
@@ -177,7 +177,7 @@ function makeDataUrl(){
 					var plane = new THREE.PlaneGeometry( 100, 100, width, height );
 
 					for ( var k = 0; k < plane.vertices.length; k++ ) {
-						plane.vertices[k].setZ(data[k] || 0);
+						plane.vertices[k].setZ( data[k] > 0 ? 20:0);
 					}
 
 //					var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
@@ -188,7 +188,7 @@ function makeDataUrl(){
 
                 console.log('ready for download!');
 
-                var myStlString = stlFromGeometry( plane, {download:true, useObjectPosition:false} )
+              stlFromGeometry( plane, {download:true, useObjectPosition:false} )
 
             }
 
