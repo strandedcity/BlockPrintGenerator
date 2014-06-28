@@ -19,32 +19,16 @@
     <script src="js/postprocessing/ShaderPass.js"></script>
 
     <script type="text/javascript">
-                function download(){
-  var dataURL = document.getElementById('canvas').toDataURL("image/png");
-
-  // The returnType argument specifies how to get the
-  // the image.  'obj' will set the source to an image element.
-  // 'window' will open a new window and display the image.
-  // 'download' will prompt the user to save the image.
-//  switch(returnType) {
-//    case 'obj':
-//      var imgObj = new Image();
-//      imgObj.src = dataURL;
-//      document.getElementById('graphics').appendChild(imgObj);
-//      break;
-//    case 'window':
-//      window.open(dataURL, "Canvas Image");
-//      break;
-//    case 'download':
-      dataURL = dataURL.replace("image/png", "image/octet-stream");
-      document.location.href = dataURL;
-//      break;
 
 
-        }
+
+
+
+
+
     </script>
 </head>
-<body onclick="download();">
+<body>
 <script>
 
 			var camera, scene, renderer, composer;
@@ -142,6 +126,47 @@
 			}
 
 
+function makeDataUrl(){
+  var dataURL = document.getElementById('canvas').toDataURL("image/png");
+      dataURL = dataURL.replace("image/png", "image/octet-stream");
+//      document.location.href = dataURL;
+
+    getHeightData(dataURL);
+}
+
+        function getHeightData(dataUrl) {
+
+            var img = new Image;
+            img.src = dataUrl;
+            img.onload = function(){
+
+                var canvas = document.createElement( 'canvas' );
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                var context = canvas.getContext( '2d' );
+
+                var size = window.innerWidth * window.innerHeight, data = new Float32Array( size );
+
+                context.drawImage(img,0,0);
+
+                for ( var i = 0; i < size; i ++ ) {
+                    data[i] = 0
+                }
+
+                var imgd = context.getImageData(0, 0, window.innerWidth, window.innerHeight);
+                var pix = imgd.data;
+
+                var j=0;
+                for (var i = 0, n = pix.length; i < n; i += (4)) {
+                    var all = pix[i]+pix[i+1]+pix[i+2];
+                    data[j++] = all/30;
+                }
+                
+            }
+
+        }
+
+document.onclick = makeDataUrl;
 
 		</script>
 </body>
