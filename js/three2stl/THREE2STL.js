@@ -84,10 +84,22 @@ console.log('done making stl');
 //          link.href = 'data:Application/octet-stream, ' + encodeURIComponent( stl );
 //          link.target = "_blank";
 //          link.click();
+        downloadBlob(stl);
 
-
-		document.location = 'data:Application/octet-stream, ' + encodeURIComponent( stl )
+//		document.location = 'data:Application/octet-stream, ' + encodeURIComponent( stl )
 	}
 
 	return stl
+}
+function downloadBlob(stringData){
+    window.URL = window.URL || window.webkitURL;
+
+    var blob = new Blob([stringData], {type: 'application/sla'});
+
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.innerHTML = "Download";
+    link.download = 'file.stl';
+    link.click();
+//    document.body.appendChild(link);
 }
