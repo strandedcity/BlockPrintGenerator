@@ -1,0 +1,58 @@
+<html>
+<head>
+    <script type="text/javascript">
+        var stlDataInput =
+        "solid cube_corner\n"+
+        "  facet normal 0.0 -1.0 0.0\n"+
+        "    outer loop\n"+
+        "      vertex 0.0 0.0 0.0\n"+
+        "      vertex 1.0 0.0 0.0\n"+
+        "      vertex 0.0 0.0 1.0\n"+
+        "    endloop\n"+
+        "  endfacet\n"+
+        "  facet normal 0.0 0.0 -1.0\n"+
+        "    outer loop\n"+
+        "      vertex 0.0 0.0 0.0\n"+
+        "      vertex 0.0 1.0 0.0\n"+
+        "      vertex 1.0 0.0 0.0\n"+
+        "    endloop\n"+
+        "  endfacet\n"+
+        "  facet normal 0.0 0.0 -1.0\n"+
+        "    outer loop\n"+
+        "      vertex 0.0 0.0 0.0\n"+
+        "      vertex 0.0 0.0 1.0\n"+
+        "      vertex 0.0 1.0 0.0\n"+
+        "    endloop\n"+
+        "  endfacet\n"+
+        "  facet normal 0.577 0.577 0.577\n"+
+        "    outer loop\n"+
+        "      vertex 1.0 0.0 0.0\n"+
+        "      vertex 0.0 1.0 0.0\n"+
+        "      vertex 0.0 0.0 1.0\n"+
+        "    endloop\n"+
+        "  endfacet\n"+
+        "endsolid\n";
+
+        // Testing size exponentially. Looks like we get to about 300mb before we crash!
+//        for (var i=0; i<19; i++){
+//            stlDataInput = stlDataInput + stlDataInput;
+//        }
+
+
+        function createLink(){
+            window.URL = window.URL || window.webkitURL;
+
+            var blob = new Blob([stlDataInput], {type: 'application/sla'});
+
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.innerHTML = "Download";
+            link.download = 'file.stl';
+            document.body.appendChild(link);
+        }
+    </script>
+</head>
+<body onload="createLink();">
+
+</body>
+</html>
