@@ -176,8 +176,7 @@ function makeDataUrl(){
                 console.log('processed image data. creating THREE.geometry');
 
                 // plane
-					var plane = new THREE.PlaneGeometry( width, height, width, height );
-
+					var plane = new THREE.PlaneGeometry( width, height, width-1, height-1 );
 					for ( var k = 0; k < plane.vertices.length; k++ ) {
 						plane.vertices[k].setZ( data[k] > 0 ? 4:0);
 					}
