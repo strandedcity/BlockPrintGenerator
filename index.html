@@ -13,7 +13,7 @@
     <style>
         body {
             margin: 0px;
-            background-color: #000000;
+            background-color: white;
             overflow: hidden;
         }
     </style>
@@ -22,10 +22,13 @@
     <script src="js/three2stl/THREE2STL.js"></script>
 
     <script src="js/halftone-processing.js"></script>
+    <script src="js/halftone-drawing.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('#imageForHalftoning').on("load",function(){
-                intensitiesForImageWithGridSize($(this).get(0),150);
+                var grid = intensitiesForImageWithGridSize($(this).get(0),50);
+
+                drawHalftoneGridThreeJS(grid);
             });
         });
 

@@ -1,7 +1,3 @@
-if (THREE === "undefined") {
-    throw new Error("We'll need three.js to get started.");
-}
-
 function intensitiesForImageWithGridSize(imgEl,gridSize){
     var canvas = document.createElement('canvas'),
         context = canvas.getContext && canvas.getContext('2d'),
@@ -14,16 +10,18 @@ function intensitiesForImageWithGridSize(imgEl,gridSize){
     data = context.getImageData(0, 0, width, height);
 
     var y = 0;
+    var grid = [];
     while (y*gridSize < height) {
-        var x = 0;
+        var x = 0, gridRow = [];
         while (x*gridSize < width) {
             var rgb = pixelDensityAtCell(x,y,width,gridSize,data.data);
-            console.log(x,y,rgb);
+            gridRow.push(rgb);
             x++;
         }
+        grid.push(gridRow);
         y++;
     }
-
+    return grid;
 }
 
 function pixelDensityAtCell(x,y,imageWidth,cellsize,data) {
