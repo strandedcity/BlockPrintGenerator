@@ -29,22 +29,44 @@ function intensitiesForImageWithGridSize(imgEl,gridSize){
         return defaultRGB;
     }
 
-    length = data.data.length;
+    var rgb = pixelDensityAtCell(0,0,width,gridSize,data.data);
 
+    console.log(rgb);
+//    length = data.data.length;
+//
+//
+//
+//    while ( (i += blockSize * 4) < length ) {
+//        ++count;
+//        rgb.r += data.data[i];
+//        rgb.g += data.data[i+1];
+//        rgb.b += data.data[i+2];
+//    }
+//
+//    // ~~ used to floor values
+//    rgb.r = ~~(rgb.r/count);
+//    rgb.g = ~~(rgb.g/count);
+//    rgb.b = ~~(rgb.b/count);
+//
+//    return rgb;
 
+}
 
-    while ( (i += blockSize * 4) < length ) {
-        ++count;
-        rgb.r += data.data[i];
-        rgb.g += data.data[i+1];
-        rgb.b += data.data[i+2];
+function pixelDensityAtCell(x,y,imageWidth,cellsize,data) {
+    var a = 0, cumulativeR = 0, cumulativeG = 0, cumulativeB = 0, pixelCount = cellsize*cellsize;
+    while ( a < cellsize) {
+        var b = 0;
+        while ( b < cellsize) {
+            cumulativeR += data[x*cellsize + (y+a)*imageWidth + b];
+            cumulativeG += data[x*cellsize + (y+a)*imageWidth + b + 1];
+            cumulativeB += data[x*cellsize + (y+a)*imageWidth + b + 2];
+            b++;
+        }
+        a++;
     }
-
-    // ~~ used to floor values
-    rgb.r = ~~(rgb.r/count);
-    rgb.g = ~~(rgb.g/count);
-    rgb.b = ~~(rgb.b/count);
-
-    return rgb;
-
+    return {
+        r: ~~(cumulativeR / pixelCount),
+        g: ~~(cumulativeG / pixelCount),
+        b: ~~(cumulativeB / pixelCount)
+    }
 }

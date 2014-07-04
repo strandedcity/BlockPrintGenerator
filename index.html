@@ -25,7 +25,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#imageForHalftoning').on("load",function(){
-                console.log('loaded image')
+                intensitiesForImageWithGridSize($(this).get(0),150);
             });
         });
 
