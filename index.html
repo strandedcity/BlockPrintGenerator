@@ -1,6 +1,7 @@
 <html>
 <head>
     <!--
+    Resources of Interest:
     solid geometry + stl export http://moczys.com/2014/01/13/three-js-experiment-3-additive-geometry/
     halftone algorithm hint: http://jsfiddle.net/xLF38/
     more on that: http://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
@@ -8,8 +9,34 @@
     Constructive Solid Geo for three.js: http://learningthreejs.com/blog/2011/12/10/constructive-solid-geometry-with-csg-js/
     wall-mounted drawing robot: http://juerglehni.com/works/hektor/
     -->
+    <title>JavaScript Pop Art</title>
+    <style>
+        body {
+            margin: 0px;
+            background-color: #000000;
+            overflow: hidden;
+        }
+    </style>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/three.min.js"></script>
+    <script src="js/three2stl/THREE2STL.js"></script>
+
+    <script src="js/halftone-processing.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#imageForHalftoning').on("load",function(){
+                console.log('loaded image')
+            });
+        });
+
+
+
+
+
+
+    </script>
 </head>
 <body>
-
+<img src="test.jpg" id="imageForHalftoning" style="display: none;">
 </body>
 </html>
