@@ -35,7 +35,7 @@ function drawHalftoneGridThreeJS(grid) {
                 continue;
             }
             var circle = new THREE.Mesh(new THREE.CircleGeometry((1-grid[y][x])*maxSize,15),blackDotMaterial);
-            circle.position = new THREE.Vector3( x*cellSize, y*cellSize, 0);
+            circle.position = new THREE.Vector3( x*cellSize, displayHeight-y*cellSize, 0);
             scene.add(circle);
         }
     }
