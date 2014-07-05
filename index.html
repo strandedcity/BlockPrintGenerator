@@ -20,14 +20,16 @@
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/three.min.js"></script>
     <script src="js/three2stl/THREE2STL.js"></script>
+    <script src="js/ThreeCSG.js"></script>
 
     <script src="js/halftone-processing.js"></script>
     <script src="js/halftone-drawing.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('#imageForHalftoning').on("load",function(){
-                var grid = intensitiesForImageWithGridSize($(this).get(0),30);
-                drawHalftoneGridThreeJS(grid);
+                var grid = intensitiesForImageWithGridSize($(this).get(0),300);
+//                drawHalftoneGridThreeJS(grid);
+                createBlockPlate(grid,6);
             });
         });
 
