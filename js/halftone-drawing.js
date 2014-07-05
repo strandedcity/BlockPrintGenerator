@@ -81,7 +81,7 @@ function setupThreeScene(options){
     // renderer
     var renderer = new THREE.WebGLRenderer({ antialias: true }   );
     renderer.setSize(displayWidth, displayHeight);
-    renderer.setClearColorHex( 0xffffff, 1 );
+    renderer.setClearColor( 0xffffff, 1 );
     document.body.appendChild(renderer.domElement);
 
     // camera
