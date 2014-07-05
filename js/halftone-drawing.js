@@ -52,9 +52,7 @@ function createBlockPlate(grid,longDimension){
     var maxSize = cellSize / 1.42;
 console.log(cellSize);
     var blackDotMaterial = new THREE.MeshBasicMaterial({color: 'black'});
-    var basePlate = new THREE.Mesh(new THREE.BoxGeometry( 6.0, 4.0, 0.125, 1,1,1 ),blackDotMaterial );
-    var baseCSG = "";
-
+    var basePlate = new THREE.Geometry();//new THREE.BoxGeometry( 1.0, 1.0, 0.125, 1,1,1 );
 
     for (var y = 0; y < grid.length; y++) {
         for (var x = 0; x < grid[y].length; x++) {
@@ -62,34 +60,33 @@ console.log(cellSize);
                 continue;
             }
             var radius = (1-grid[y][x])*maxSize;
-            var cyl = new THREE.Mesh(new THREE.CylinderGeometry(radius,radius,0.25,8),blackDotMaterial);
-            cyl.position = new THREE.Vector3( x*cellSize, displayHeight-y*cellSize, 0);
-//            console.log(cyl.position);
-            if (baseCSG === "") {
-                baseCSG = new ThreeBSP(cyl)
-            } else {
-                baseCSG = baseCSG.union(new ThreeBSP(cyl));
-            }
-//            scene.add(cyl);
+            var cyl = new THREE.CylinderGeometry(radius,radius,0.25,8);
+//            cyl.position = new THREE.Vector3( x*cellSize, displayHeight-y*cellSize, 0);
+            // see http://stackoverflow.com/questions/24353756/migrating-geometryutils-merge-to-geometry-merge
+//            scene.add(new THREE.Mesh(cyl,blackDotMaterial));
+            basePlate.merge(cyl);
         }
         console.log('done with row...');
     }
 
-    var finalMesh = baseCSG.toMesh(new THREE.MeshNormalMaterial());
+    var fullMesh = new THREE.Mesh(basePlate,blackDotMaterial);
+    scene.add(fullMesh);
+
+//    var finalMesh = baseCSG.toMesh(new THREE.MeshNormalMaterial());
 
 
-//    camera.position.z = 10;
+    camera.position.z = 50;
 //    camera.position.x = 3;
 //    camera.position.y = 2;
-//    renderer.render(scene,camera);
+    renderer.render(scene,camera);
 
-    stlFromGeometry( finalMesh.geometry, {download:true, useObjectPosition:false} );
+    stlFromGeometry( basePlate, {download:true, useObjectPosition:false} );
 }
 
 function setupThreeScene(){
 
-    var displayWidth = window.innerWidth;
-    var displayHeight = window.innerHeight;
+    var displayWidth = 6;
+    var displayHeight =4;
 
     // renderer
     var renderer = new THREE.WebGLRenderer({ antialias: true }   );
