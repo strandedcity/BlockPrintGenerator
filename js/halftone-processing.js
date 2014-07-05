@@ -11,7 +11,8 @@ function intensitiesForImageWithGridSize(imgEl,gridSize){
 
     var y = 0;
     var grid = [];
-    while (y*gridSize < height) {
+    // using y+1 here because we don't want to do an extra row at the end that's actually outside the image area
+    while ((y+1)*gridSize < height) {
         var x = 0, gridRow = [];
         while (x*gridSize < width) {
             var rgb = pixelDensityAtCell(x,y,width,gridSize,data.data);
@@ -21,8 +22,6 @@ function intensitiesForImageWithGridSize(imgEl,gridSize){
         grid.push(gridRow);
         y++;
     }
-//    console.log(pixelDensityAtCell(0,0,width,gridSize,data.data));
-//    console.log(pixelDensityAtCell(4,8,width,gridSize,data.data));
     return grid;
 }
 
@@ -37,10 +36,8 @@ function pixelDensityAtCell(x,y,imageWidth,cellsize,data) {
             cumulativeR += data[offsetConstant + 4*b];
             cumulativeG += data[offsetConstant + 4*b + 1];
             cumulativeB += data[offsetConstant + 4*b + 2];
-//            console.log({r: data[offsetConstant + 4*b], g: data[offsetConstant + 4*b + 1], b: data[offsetConstant + 4*b + 2]});
             b++;
         }
-//        console.log('----');
         a++;
     }
 //    return {
