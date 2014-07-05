@@ -10,6 +10,7 @@
     wall-mounted drawing robot: http://juerglehni.com/works/hektor/
     -->
     <title>JavaScript Pop Art</title>
+    <link href="styles.css" type="text/css" rel="stylesheet">
     <style>
         body {
             margin: 0px;
@@ -20,27 +21,63 @@
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/three.min.js"></script>
     <script src="js/three2stl/THREE2STL.js"></script>
-    <script src="js/ThreeCSG.js"></script>
 
     <script src="js/halftone-processing.js"></script>
     <script src="js/halftone-drawing.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+            function previewFile(file){
+                var preview = new FileReader();
+
+                function attachPreviewToDOM(event){
+                    // Preview images
+                    var bin = preview.result;
+                    var img = document.getElementById('imageForHalftoning');
+                    img.src = bin;
+                }
+
+                // Firefox 3.6, WebKit
+                if(preview.addEventListener) {
+                    preview.addEventListener('loadend', attachPreviewToDOM, false);
+                // Chrome 7
+                } else {
+                    preview.onloadend = attachPreviewToDOM;
+                }
+                preview.readAsDataURL(file);
+            }
+
             $('#imageForHalftoning').on("load",function(){
                 var grid = intensitiesForImageWithGridSize($(this).get(0),10);
                 drawHalftoneGridThreeJS(grid);
-                createBlockPlate(grid,6);
+//                createBlockPlate(grid,6);
             });
+
+            var dragArea = $('.dropListener').get(0);
+            dragArea.addEventListener("dragover", function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+                $('.dropListener').addClass("highlighted");
+            }, true);
+            dragArea.addEventListener("dragleave",function(event){
+                event.stopPropagation();
+                event.preventDefault();
+                $('.dropListener').removeClass("highlighted");
+            });
+            dragArea.addEventListener("drop", function(event){
+                event.preventDefault();
+                var dt = event.dataTransfer;
+                var file = dt.files[0];
+
+                $('.dropListener').fadeOut(150,function(){
+                    previewFile(file);
+                });
+            }, false);
+
         });
-
-
-
-
-
-
     </script>
 </head>
 <body>
-<img src="img/einstein.jpg" id="imageForHalftoning" style="display: none;">
+<div class="dropListener"></div>
+<img id="imageForHalftoning" style="display: none;">
 </body>
 </html>
