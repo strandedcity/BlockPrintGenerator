@@ -21,7 +21,8 @@ function drawHalftoneGridThreeJS(grid) {
 
     for (var y = 0; y < grid.length; y++) {
         for (var x = 0; x < grid[y].length; x++) {
-            if (grid[y][x] === 1 || grid[y][x] === 0 || isNaN(grid[y][x])) {
+            if (grid[y][x] === 1) {
+                // cell is pure white. No black point here.
                 continue;
             }
             var circle = new THREE.Mesh(new THREE.CircleGeometry((1-grid[y][x])*maxSize,15),blackDotMaterial);
@@ -52,7 +53,8 @@ function createBlockPlate(grid,displayWidth){
 
     for (var y = 0; y < grid.length; y++) {
         for (var x = 0; x < grid[y].length; x++) {
-            if (grid[y][x] === 1 || grid[y][x] === 0 || isNaN(grid[y][x])) {
+            if (grid[y][x] === 1) {
+                // cell is pure white. No black point here.
                 continue;
             }
             var radius = (1-grid[y][x])*maxSize;
