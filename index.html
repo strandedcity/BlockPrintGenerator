@@ -27,8 +27,8 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#imageForHalftoning').on("load",function(){
-                var grid = intensitiesForImageWithGridSize($(this).get(0),300);
-//                drawHalftoneGridThreeJS(grid);
+                var grid = intensitiesForImageWithGridSize($(this).get(0),50);
+                drawHalftoneGridThreeJS(grid);
                 createBlockPlate(grid,6);
             });
         });
