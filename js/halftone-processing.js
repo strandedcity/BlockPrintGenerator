@@ -33,7 +33,7 @@ function pixelDensityAtCell(x,y,imageWidth,cellsize,data) {
         while ( b < cellsize) {
             // a & b refer to pixels within the "cell" defined at position x & y.
             // Array positions for rgb are further confused by there being 4 pieces of information per pixel
-            var offsetConstant = 4*(x*cellsize + (a+y)*imageWidth*cellsize);
+            var offsetConstant = 4*(x*cellsize + (y*cellsize+a)*imageWidth);
             cumulativeR += data[offsetConstant + 4*b];
             cumulativeG += data[offsetConstant + 4*b + 1];
             cumulativeB += data[offsetConstant + 4*b + 2];

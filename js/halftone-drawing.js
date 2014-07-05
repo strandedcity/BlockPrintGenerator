@@ -27,11 +27,14 @@ function drawHalftoneGridThreeJS(grid) {
 
     // come up with a cell size such that it will just barely aspect-fit on the screen as it is right now:
     var cellSize = ~~Math.min(displayWidth/grid[0].length, displayHeight/grid.length);
-    var maxSize = cellSize / 1.2;
+    var maxSize = cellSize / 1.42;
 
     for (var y = 0; y < grid.length; y++) {
         for (var x = 0; x < grid[y].length; x++) {
-            var circle = new THREE.Mesh(new THREE.CircleGeometry(grid[y][x]*maxSize,15),blackDotMaterial);
+            if (grid[y][x] === 1) {
+                continue;
+            }
+            var circle = new THREE.Mesh(new THREE.CircleGeometry((1-grid[y][x])*maxSize,15),blackDotMaterial);
             circle.position = new THREE.Vector3( x*cellSize, y*cellSize, 0);
             scene.add(circle);
         }

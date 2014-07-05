@@ -26,8 +26,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#imageForHalftoning').on("load",function(){
-                var grid = intensitiesForImageWithGridSize($(this).get(0),10);
-
+                var grid = intensitiesForImageWithGridSize($(this).get(0),5);
                 drawHalftoneGridThreeJS(grid);
             });
         });
@@ -40,6 +39,6 @@
     </script>
 </head>
 <body>
-<img src="img/BezierCircleFigure3.png" id="imageForHalftoning" style="display: none;">
+<img src="img/images.jpg" id="imageForHalftoning" style="display: none;">
 </body>
 </html>
