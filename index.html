@@ -27,7 +27,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $('#imageForHalftoning').on("load",function(){
-                var grid = intensitiesForImageWithGridSize($(this).get(0),8);
+                var grid = intensitiesForImageWithGridSize($(this).get(0),10);
                 drawHalftoneGridThreeJS(grid);
                 createBlockPlate(grid,6);
             });
@@ -41,6 +41,6 @@
     </script>
 </head>
 <body>
-<img src="img/FxCam_1280792232246.jpg" id="imageForHalftoning" style="display: none;">
+<img src="img/einstein.jpg" id="imageForHalftoning" style="display: none;">
 </body>
 </html>
