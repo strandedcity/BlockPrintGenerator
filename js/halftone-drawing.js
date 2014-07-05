@@ -61,10 +61,14 @@ console.log(cellSize);
             }
             var radius = (1-grid[y][x])*maxSize;
             var cyl = new THREE.CylinderGeometry(radius,radius,0.25,8);
-//            cyl.position = new THREE.Vector3( x*cellSize, displayHeight-y*cellSize, 0);
+            var cylMesh = new THREE.Mesh(cyl, blackDotMaterial);
+
+            cylMesh.position = new THREE.Vector3( x*cellSize, displayHeight-y*cellSize, 0);
+            cylMesh.rotation.x = Math.PI/2;
             // see http://stackoverflow.com/questions/24353756/migrating-geometryutils-merge-to-geometry-merge
 //            scene.add(new THREE.Mesh(cyl,blackDotMaterial));
-            basePlate.merge(cyl);
+            cylMesh.updateMatrix();
+            basePlate.merge(cyl,cylMesh.matrix);
         }
         console.log('done with row...');
     }
