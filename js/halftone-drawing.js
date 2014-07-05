@@ -25,7 +25,9 @@ function drawHalftoneGridThreeJS(grid) {
         color: 'black'
     });
 
-    var cellSize = 15, maxSize = cellSize / 1.2;
+    // come up with a cell size such that it will just barely aspect-fit on the screen as it is right now:
+    var cellSize = ~~Math.min(displayWidth/grid[0].length, displayHeight/grid.length);
+    var maxSize = cellSize / 1.2;
 
     for (var y = 0; y < grid.length; y++) {
         for (var x = 0; x < grid[y].length; x++) {

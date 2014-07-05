@@ -21,6 +21,8 @@ function intensitiesForImageWithGridSize(imgEl,gridSize){
         grid.push(gridRow);
         y++;
     }
+//    console.log(pixelDensityAtCell(0,0,width,gridSize,data.data));
+//    console.log(pixelDensityAtCell(4,8,width,gridSize,data.data));
     return grid;
 }
 
@@ -29,11 +31,16 @@ function pixelDensityAtCell(x,y,imageWidth,cellsize,data) {
     while ( a < cellsize) {
         var b = 0;
         while ( b < cellsize) {
-            cumulativeR += data[x*cellsize + (y+a)*imageWidth + b];
-            cumulativeG += data[x*cellsize + (y+a)*imageWidth + b + 1];
-            cumulativeB += data[x*cellsize + (y+a)*imageWidth + b + 2];
+            // a & b refer to pixels within the "cell" defined at position x & y.
+            // Array positions for rgb are further confused by there being 4 pieces of information per pixel
+            var offsetConstant = 4*(x*cellsize + (a+y)*imageWidth*cellsize);
+            cumulativeR += data[offsetConstant + 4*b];
+            cumulativeG += data[offsetConstant + 4*b + 1];
+            cumulativeB += data[offsetConstant + 4*b + 2];
+//            console.log({r: data[offsetConstant + 4*b], g: data[offsetConstant + 4*b + 1], b: data[offsetConstant + 4*b + 2]});
             b++;
         }
+//        console.log('----');
         a++;
     }
 //    return {
