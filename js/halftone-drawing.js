@@ -26,13 +26,13 @@ function drawHalftoneGridThreeJS(grid) {
                 continue;
             }
             var circle = new THREE.Mesh(new THREE.CircleGeometry((1-grid[y][x])*maxSize,15),blackDotMaterial);
-            circle.position = new THREE.Vector3( x*cellSize, displayHeight-y*cellSize, 0);
+            circle.position = new THREE.Vector3( x*cellSize, displayHeight-(y*cellSize), 0);
             scene.add(circle);
         }
     }
 
-    camera.position.x = cellSize * grid[0].length / 2;
-    camera.position.y = cellSize * grid.length / 2;
+    camera.position.x = cellSize * (grid[0].length-1) / 2;
+    camera.position.y = displayHeight-(cellSize*grid.length/2);
 
     renderer.render(scene,camera);
 }
@@ -72,14 +72,15 @@ function createBlockPlate(grid,displayWidth){
     stlFromGeometry( basePlate, {download:true, useObjectPosition:false} );
 }
 
-function setupThreeScene(){
+function setupThreeScene(options){
+    var options = options || {};
 
-    var displayWidth = window.innerWidth;
-    var displayHeight = window.innerHeight;
+    var displayWidth = options.width || window.innerWidth;
+    var displayHeight = options.height || window.innerHeight;
 
     // renderer
     var renderer = new THREE.WebGLRenderer({ antialias: true }   );
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(displayWidth, displayHeight);
     renderer.setClearColorHex( 0xffffff, 1 );
     document.body.appendChild(renderer.domElement);
 
