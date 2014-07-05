@@ -36,25 +36,16 @@ function drawHalftoneGridThreeJS(grid) {
     renderer.render(scene,camera);
 }
 
-function createBlockPlate(grid,longDimension){
-//        var threeScene = setupThreeScene();
-//    var scene = threeScene.scene,
-//        camera = threeScene.camera,
-//        renderer = threeScene.renderer;
-////        displayHeight = threeScene.height,
-////        displayWidth = threeScene.width;
-
-    var displayWidth = longDimension;
-    var displayHeight = 4.0;
+function createBlockPlate(grid,displayWidth){
+    var cellSize = displayWidth/grid[0].length;//Math.min(displayWidth/grid[0].length, displayHeight/grid.length);
+    var displayHeight = grid.length * cellSize;
 
     // come up with a cell size such that it will just barely aspect-fit on the screen as it is right now:
-    var cellSize = Math.min(displayWidth/grid[0].length, displayHeight/grid.length);
     var maxSize = cellSize / 1.42;
-//console.log(cellSize);
     var blackDotMaterial = new THREE.MeshBasicMaterial({color: 'black'});
     var plateGeom = new THREE.BoxGeometry( (grid[0].length+1) * cellSize, (grid.length+1) * cellSize, 0.125, 1,1,1 );
     var temp = new THREE.Mesh(plateGeom,blackDotMaterial);
-    temp.position = new THREE.Vector3((grid[0].length) * cellSize/2, (grid.length) * cellSize/2, 0);
+    temp.position = new THREE.Vector3((grid[0].length+1) * cellSize/2, (grid.length+1) * cellSize/2, 0.0625);
     temp.updateMatrix();
     var basePlate = new THREE.Geometry();
     basePlate.merge(plateGeom,temp.matrix);
@@ -65,29 +56,16 @@ function createBlockPlate(grid,longDimension){
                 continue;
             }
             var radius = (1-grid[y][x])*maxSize;
-            var cyl = new THREE.CylinderGeometry(radius,radius,0.25,8);
+            var cyl = new THREE.CylinderGeometry(radius,cellSize,0.25,15);
             var cylMesh = new THREE.Mesh(cyl, blackDotMaterial);
 
-            cylMesh.position = new THREE.Vector3( x*cellSize, displayHeight-y*cellSize, 0.125);
+            cylMesh.position = new THREE.Vector3( (x+1)*cellSize, displayHeight-y*cellSize, 0.125);
             cylMesh.rotation.x = Math.PI/2;
             // see http://stackoverflow.com/questions/24353756/migrating-geometryutils-merge-to-geometry-merge
-//            scene.add(new THREE.Mesh(cyl,blackDotMaterial));
             cylMesh.updateMatrix();
             basePlate.merge(cyl,cylMesh.matrix);
         }
-//        console.log('done with row...');
     }
-
-//    var fullMesh = new THREE.Mesh(basePlate,blackDotMaterial);
-//    scene.add(fullMesh);
-
-//    var finalMesh = baseCSG.toMesh(new THREE.MeshNormalMaterial());
-
-
-//    camera.position.z = 50;
-//    camera.position.x = 3;
-//    camera.position.y = 2;
-//    renderer.render(scene,camera);
 
     stlFromGeometry( basePlate, {download:true, useObjectPosition:false} );
 }
