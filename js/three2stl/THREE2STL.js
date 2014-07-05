@@ -77,21 +77,14 @@ function stlFromGeometry( geometry, options ) {
 	}
 
 	stl += 'endsolid'
-console.log('done making stl');
-	if ( download ) {
-//          var link = document.createElement("a");
-////          link.download = name;
-//          link.href = 'data:Application/octet-stream, ' + encodeURIComponent( stl );
-//          link.target = "_blank";
-//          link.click();
-        downloadBlob(stl);
 
-//		document.location = 'data:Application/octet-stream, ' + encodeURIComponent( stl )
+	if ( download ) {
+        downloadBlob(stl);
 	}
 
 	return stl
 }
-function downloadBlob(stringData){
+function downloadBlob(stringData,filename){
     window.URL = window.URL || window.webkitURL;
 
     var blob = new Blob([stringData], {type: 'application/sla'});
@@ -99,7 +92,6 @@ function downloadBlob(stringData){
     var link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
     link.innerHTML = "Download";
-    link.download = 'file.stl';
+    link.download = filename || 'halftone.stl';
     link.click();
-//    document.body.appendChild(link);
 }
