@@ -12,11 +12,7 @@
     <title>JavaScript Pop Art</title>
     <link href="styles.css" type="text/css" rel="stylesheet">
     <style>
-        body {
-            margin: 0px;
-            background-color: white;
-            overflow: hidden;
-        }
+
     </style>
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="js/three.min.js"></script>
@@ -47,6 +43,7 @@
             }
 
             $('#imageForHalftoning').on("load",function(){
+                $('.controls').removeClass('hidden');
                 var grid = intensitiesForImageWithGridSize($(this).get(0),10);
                 drawHalftoneGridThreeJS(grid);
 //                createBlockPlate(grid,6);
@@ -79,5 +76,71 @@
 <body>
 <div class="dropListener"></div>
 <img id="imageForHalftoning" style="display: none;">
+<div class="controls hidden">
+    <div class="contents">
+        <div class="resolutionChoices">
+            <div class="title">
+                1. CHOOSE DOT SCREEN
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_0" href="#">#0</a>
+                <span class="detail">FINE</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_1" href="#">#1</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_2" href="#">#2</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_3" href="#">#3</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_4" href="#">#4</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_5" href="#">#5</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock selected">
+                <a class="courseButton" id="course_6" href="#">#6</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_7" href="#">#7</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_8" href="#">#8</a>
+                <span class="detail">&nbsp;</span>
+            </div>
+            <div class="coursenessChoiceBlock">
+                <a class="courseButton" id="course_9" href="#">#9</a>
+                <span class="detail">COURSE</span>
+            </div>
+        </div>
+        <div class="sizeChoices">
+            <div class="title">
+                2. DOWNLOAD STL
+            </div>
+            <div class="sizeChoiceBlock">
+                <a class="sizeButton" id="small" href="#">S</a>
+                <span class="detail">4" Wide</span>
+            </div>
+            <div class="sizeChoiceBlock">
+                <a class="sizeButton" id="medium" href="#">M</a>
+                <span class="detail">6" Wide</span>
+            </div>
+            <div class="sizeChoiceBlock">
+                <a class="sizeButton" id="large" href="#">L</a>
+                <span class="detail">12" Wide</span>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

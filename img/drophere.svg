@@ -25,7 +25,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-113.57143"
+     inkscape:cx="-469.28572"
      inkscape:cy="520"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -33,7 +33,7 @@
      inkscape:window-width="1477"
      inkscape:window-height="956"
      inkscape:window-x="237"
-     inkscape:window-y="133"
+     inkscape:window-y="72"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
@@ -213,6 +213,34 @@
            id="path3900"
            inkscape:connector-curvature="0" />
       </g>
+    </g>
+    <g
+       id="g3032"
+       inkscape:export-filename="/home/phil/PROJECTS/PopArt/img/hangon.png"
+       inkscape:export-xdpi="166.13"
+       inkscape:export-ydpi="166.13">
+      <text
+         sodipodi:linespacing="125%"
+         id="text3024"
+         y="347.55542"
+         x="-805.21875"
+         style="font-size:239.63996887px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Droid Sans;-inkscape-font-specification:Droid Sans Bold"
+         xml:space="preserve"><tspan
+           y="347.55542"
+           x="-805.21875"
+           id="tspan3026"
+           sodipodi:role="line">HANG</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text3028"
+         y="713.34686"
+         x="-813.9043"
+         style="font-size:495.05392456px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Droid Sans;-inkscape-font-specification:Droid Sans"
+         xml:space="preserve"><tspan
+           y="713.34686"
+           x="-813.9043"
+           id="tspan3030"
+           sodipodi:role="line">ON</tspan></text>
     </g>
   </g>
 </svg>
