@@ -79,12 +79,15 @@ function stlFromGeometry( geometry, options ) {
 	stl += 'endsolid'
 
 	if ( download ) {
-        downloadBlob(stl);
+        downloadBlob(stl,window.fileName);
 	}
 
 	return stl
 }
 function downloadBlob(stringData,filename){
+    var processedFilename = filename || "halftone";
+    processedFilename += ".stl";
+
     window.URL = window.URL || window.webkitURL;
 
     var blob = new Blob([stringData], {type: 'application/sla'});
@@ -92,6 +95,6 @@ function downloadBlob(stringData,filename){
     var link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
     link.innerHTML = "Download";
-    link.download = filename || 'halftone.stl';
+    link.download = processedFilename;
     link.click();
 }

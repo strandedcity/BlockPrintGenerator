@@ -21,6 +21,22 @@
     <script src="js/halftone-processing.js"></script>
     <script src="js/halftone-drawing.js"></script>
     <script type="text/javascript">
+        function calculatePixelGridSizes(imageWidth){
+            var sizes = [];
+            sizes.push(parseInt(imageWidth/150));
+            sizes.push(parseInt(imageWidth/120));
+            sizes.push(parseInt(imageWidth/90));
+            sizes.push(parseInt(imageWidth/70));
+            sizes.push(parseInt(imageWidth/65));
+            sizes.push(parseInt(imageWidth/60));
+            sizes.push(parseInt(imageWidth/55));
+            sizes.push(parseInt(imageWidth/50));
+            sizes.push(parseInt(imageWidth/40));
+            sizes.push(parseInt(imageWidth/30));
+
+            return sizes;
+        }
+
         $(document).ready(function(){
             function previewFile(file){
                 var preview = new FileReader();
@@ -44,9 +60,11 @@
 
             $('#imageForHalftoning').on("load",function(){
                 $('.controls').removeClass('hidden');
-                var grid = intensitiesForImageWithGridSize($(this).get(0),10);
-                drawHalftoneGridThreeJS(grid);
-//                createBlockPlate(grid,6);
+                window.pixelGridSizes = calculatePixelGridSizes($(this).get(0).naturalWidth);
+
+                var pixelGridSize = window.pixelGridSizes[5];
+                window.currentGrid = intensitiesForImageWithGridSize($(this).get(0),pixelGridSize);
+                drawHalftoneGridThreeJS(window.currentGrid);
             });
 
             var dragArea = $('.dropListener').get(0);
@@ -66,9 +84,60 @@
                 var file = dt.files[0];
 
                 $('.dropListener').fadeOut(150,function(){
+                    window.fileName = file.name;
                     previewFile(file);
                 });
             }, false);
+
+
+
+            /* Event handlers for UI Buttons */
+
+            /* Try a new dot screen size */
+            $('.courseButton').on('click',function(e){
+                e.preventDefault();
+                e.stopPropagation();
+
+                // retrieve desired courseness level
+                var courseness = parseInt($(this).attr('id').substr(7));
+
+                $('canvas').remove();
+                $('.coursenessChoiceBlock.selected').removeClass('selected');
+                $('.coursenessChoiceBlock').eq(courseness).addClass('selected');
+                $('.controls').addClass('hidden');
+
+                setTimeout(function(){
+                    var pixelGridSize = window.pixelGridSizes[courseness];
+                    window.currentGrid = intensitiesForImageWithGridSize($('#imageForHalftoning').get(0),pixelGridSize);
+                    drawHalftoneGridThreeJS(window.currentGrid);
+
+                    setTimeout(function(){$('.controls').removeClass('hidden');},100);
+                },10);
+
+            });
+
+            /* User has elected to download an STL */
+            $('.sizeButton').on('click',function(e){
+                e.preventDefault();
+                e.stopPropagation();
+
+                var plateSize = 4;
+                if ($(this).attr('id') === "medium") plateSize = 6;
+                else if ($(this).attr('id') === "large") plateSize = 12;
+
+                // prepare the UI
+                $('.controls').addClass('hidden');
+                $('canvas').addClass('hidden');
+
+                setTimeout(function(){
+                    createBlockPlate(window.currentGrid,plateSize);
+                    setTimeout(function(){
+                        $('.controls').removeClass('hidden');
+                        $('canvas').removeClass('hidden');
+                    },10);
+                },10);
+            });
+
 
         });
     </script>
@@ -102,11 +171,11 @@
                 <a class="courseButton" id="course_4" href="#">#4</a>
                 <span class="detail">&nbsp;</span>
             </div>
-            <div class="coursenessChoiceBlock">
+            <div class="coursenessChoiceBlock selected">
                 <a class="courseButton" id="course_5" href="#">#5</a>
                 <span class="detail">&nbsp;</span>
             </div>
-            <div class="coursenessChoiceBlock selected">
+            <div class="coursenessChoiceBlock">
                 <a class="courseButton" id="course_6" href="#">#6</a>
                 <span class="detail">&nbsp;</span>
             </div>

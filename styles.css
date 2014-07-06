@@ -28,7 +28,7 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.0);
 }
-.controls.hidden {
+.hidden {
     display: none;
 }
 .controls:hover {
