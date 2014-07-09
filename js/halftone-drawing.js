@@ -61,7 +61,7 @@ function createBlockPlate(grid,displayWidth){
             var cyl = new THREE.CylinderGeometry(radius,cellSize,0.25,15);
             var cylMesh = new THREE.Mesh(cyl, blackDotMaterial);
 
-            cylMesh.position = new THREE.Vector3( (x+1)*cellSize, displayHeight-y*cellSize, 0.125);
+            cylMesh.position = new THREE.Vector3( displayWidth - (x)*cellSize, displayHeight-y*cellSize, 0.125);
             cylMesh.rotation.x = Math.PI/2;
             // see http://stackoverflow.com/questions/24353756/migrating-geometryutils-merge-to-geometry-merge
             cylMesh.updateMatrix();
